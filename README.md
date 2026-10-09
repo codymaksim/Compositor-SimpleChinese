@@ -79,7 +79,7 @@ Compositor is English only for now, and translation pull requests aren't being a
 - **省略号**统一用 `…`（与上游一致，上游本身不用三个点）
 
 
-###２.4 刻意不翻译的部分
+### ２.4 刻意不翻译的部分
 翻译这些会直接导致功能损坏：
 | 类别                      | 例子                                                         | 原因                                       |
 | ------------------------- | ------------------------------------------------------------ | ------------------------------------------ |
@@ -108,7 +108,99 @@ Compositor is English only for now, and translation pull requests aren't being a
 ---
 
 
-## 四、为什么不提交上游
+## 四、已知限制
+
+**⚠️ 无自动更新**
+
+这是本发行版最重要的限制。上游仍在活跃更新（发布节奏约 1–2 天一个小版本），
+但本版无法自动获取新版本，需手动重新构建（见下节）。
+
+**⚠️ 非官方签名**
+
+App 使用 ad-hoc 签名（`Signature=adhoc`，无 Team ID）。这意味着：
+
+- 首次打开需手动清除隔离属性（见安装说明）
+- 无法通过 Gatekeeper 的公证检查
+- 不适用于需要分发给他人的场景
+
+**⚠️ 与官方版数据不互通**
+
+`.comp` 项目文件内部按英文标识存储，因此：
+
+- 本版创建的项目，**官方版打不开**（枚举标识对不上）
+- 官方版创建的项目，本版**可以打开**（界面文案不同不影响数据读取）
+- 图层混合模式、调整类型、滤镜类型均以英文标识持久化，跨版本打开安全
+
+**⚠️ 与官方版共用偏好设置**
+
+本版的 Bundle ID 为 `com.wonderassembly.compositor.zh`，但 macOS 的 `UserDefaults`
+在某些情况下会按进程主 bundle 解析偏好域，因此**可能与官方英文版共用同一份偏好设置**。
+
+若你同时安装了官方版，两者的以下偏好可能互相覆盖：
+
+| 偏好                                        | 影响                     |
+| ------------------------------------------- | ------------------------ |
+| `NSWindow Frame editor`                     | 窗口位置与尺寸           |
+| `tool.grid` / `tool.guides` / `tool.rulers` | 参考线、标尺、网格开关   |
+| `layersPanelWidth` / `navigator.visible`    | 面板宽度与导航器显示状态 |
+
+**建议**：不要与官方版同时使用，或在切换后重置 Compositor 偏好：
+
+```bash
+defaults delete com.wonderassembly.compositor
+defaults delete com.wonderassembly.compositor.zh
+```
+
+> 说明：本条为已知的不确定项。实测中清空偏好域后运行本版并未重新写入，
+> 但完整的人机交互流程（真正拖动面板、开关参考线）未能在自动化环境复现，
+> 故无法完全排除共用情形。如遇异常，以上面的 `defaults delete` 解决即可。
+
+**其他**
+
+- 仅支持 Apple Silicon，Intel Mac 无法运行（与上游一致）
+- 需要 macOS 26.0 或更高版本
+
+---
+
+## 五、安装
+
+### 前置条件
+
+- macOS 26.0 或更高版本
+- Apple Silicon（M 系列）Mac
+
+### 步骤
+
+```bash
+# 1. 复制到应用程序文件夹
+cp -R Compositor-中文版-1.4.8.app /Applications/Compositor.app
+
+# 2. 清除隔离属性（自签名 App 必需）
+xattr -dr com.apple.quarantine /Applications/Compositor.app
+
+# 3. 打开
+open /Applications/Compositor.app
+```
+
+若提示「无法验证开发者」，右键点击 App 图标选择「打开」，然后在对话框中再次确认「打开」。
+
+### 卸载
+
+```bash
+rm -rf /Applications/Compositor.app
+
+# 清理偏好设置（如有）
+defaults delete com.wonderassembly.compositor.zh 2>/dev/null
+```
+
+本版不创建 `~/Library` 下的独立配置目录（偏好存于 `UserDefaults`），
+删除 App 本身即完成卸载。
+
+
+---
+
+
+## 六、为什么不提交上游
 作者的 README 已明确拒绝 localization PR，理由是单人维护、每加一个功能就要重翻一遍、且无法 review 不懂的语言。本工作因此定位为**自用分支**，没有向上游开 PR。
 如果将来上游愿意接受，本地化的完整改动可通过以下方式提供：
 
@@ -119,7 +211,7 @@ git apply Compositor-zh.patch
 
 ---
 
-## 五、后续维护
+## 七、后续维护
 上游仍在更新，本地化会根据上游需要定期维护跟进：
 **主要维护成本**：上游每加一个功能就要补翻该功能的 UI 文案。
 由于没有引入 `.lproj` 资源文件体系（那样需要改动 230 个 Swift 文件的调用方式），
@@ -145,6 +237,7 @@ git apply Compositor-zh.patch
 
 
 ---
+
 
 
 ## 致谢

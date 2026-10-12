@@ -1,6 +1,7 @@
-Compositor-SimpleChinese
-Compositor 中文版[汉化编译]
+## Compositor 中文版[汉化编译]
+
 **这是自用分支工作记录而非 PR —— 作者 README 明确拒绝 localization PR。
+
 **基于上游 robbietilton/Compositor 从纯英文界面编译为简体中文，
 并编译出可用的 macOS App。
 - 原作者：Robbie Tilton ｜ 许可证：MIT（原作者所有）

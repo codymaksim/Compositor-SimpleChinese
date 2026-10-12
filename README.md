@@ -172,7 +172,7 @@ defaults delete com.wonderassembly.compositor.zh
 
 ```bash
 # 1. 复制到应用程序文件夹
-cp -R Compositor-中文版-1.4.8.app /Applications/Compositor.app
+cp -R Compositor.app /Applications/Compositor.app
 
 # 2. 清除隔离属性（自签名 App 必需）
 xattr -dr com.apple.quarantine /Applications/Compositor.app

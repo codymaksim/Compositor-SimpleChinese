@@ -99,7 +99,7 @@ Compositor is English only for now, and translation pull requests aren't being a
 | `Camera Raw`                 | Adobe 专有功能名，与 PS 保持一致 |
 | `Compositor 中文版帮助`      | 产品名                           |
 | `X` `Y` `W` `H`              | PS 中文版同样保留拉丁缩写        |
-| `sRGB` `DPI` `Gamma`         | 标准术语                         |
+| `sRGB` `DPI`         | 标准术语                         |
 
 
 ---
@@ -143,10 +143,7 @@ App 使用 ad-hoc 签名（`Signature=adhoc`，无 Team ID）。这意味着：
 
 **建议**：不要与官方版同时使用，或在切换后重置 Compositor 偏好：
 
-```bash
-defaults delete com.wonderassembly.compositor
-defaults delete com.wonderassembly.compositor.zh
-```
+
 
 > 说明：本条为已知的不确定项。实测中清空偏好域后运行本版并未重新写入，
 > 但完整的人机交互流程（真正拖动面板、开关参考线）未能在自动化环境复现，
@@ -199,12 +196,8 @@ defaults delete com.wonderassembly.compositor.zh 2>/dev/null
 
 ## 六、为什么不提交上游
 作者的 README 已明确拒绝 localization PR，理由是单人维护、每加一个功能就要重翻一遍、且无法 review 不懂的语言。本工作因此定位为**自用分支**，没有向上游开 PR。
-如果将来上游愿意接受，本地化的完整改动可通过以下方式提供：
 
-```bash
-# 补丁（约 420 KB，含全部改动）
-git apply Compositor-zh.patch
-```
+
 
 ---
 
@@ -218,25 +211,6 @@ git apply Compositor-zh.patch
 ---
 
 
-## 附：产物清单
-| 文件                                               | 说明                                                     |
-| -------------------------------------------------- | -------------------------------------------------------- |
-| `Compositor-zh.patch`                              | 全部改动（100 文件），可 `git apply` 到任意干净 clone    |
-| `_src/`                                            | 已中文化的完整源码                                       |
-| `build_zh.sh`                                      | 一键构建 + 组装 + 注入 + 签名                            |
-| `Compositor-中文本地化-翻译对照表.xlsx`            | 三页签：翻译对照表（423 条）/ 按文件归组（带行号）/ 说明 |
-| `extract.py`                                       | 从源码抽取 UI 字符串                                     |
-| `apply_zh.py` / `apply_extra.py` / `apply_map3.py` | 三批替换（控件 / 三元拼接 / 菜单面板）                   |
-| `dump_menus.py`                                    | 运行时抓菜单树，验证本地化                               |
-| `merge_map.py`                                     | 译文映射合并与校验                                       |
-| `zh_batch1-3.txt` / `zh_map.json`                  | 573 条译文数据                                           |
-| `remove_sparkle.py`                                | 摘除 Sparkle SPM 依赖                                    |
-
-
----
-
-
-
 ## 致谢
 - **Robbie Tilton** —— Compositor 作者，MIT 开源。本工作建立在作者的开源代码之上，所有逻辑与架构均来自上游，汉化仅涉及界面文字。
 - **Adobe** —— 混合模式、滤镜、调整图层等术语译名以 Photoshop 中文版为基准，这些译名是 Adobe 官方资产，此处仅作界面文案参照使用。
@@ -245,4 +219,4 @@ git apply Compositor-zh.patch
 ---
 
 ## 中文界面预览
-<img width="2057" height="1260" alt="Capture_26-10-09_172610" src="https://github.com/user-attachments/assets/61879d5a-6eaa-4bb6-98bf-86b73feb2aa4" />
+<img width="4114" height="2516" alt="Capture_26-10-12_142404" src="https://github.com/user-attachments/assets/73fa4462-52f5-4ec5-8e2c-f7ec0f3aecae" />

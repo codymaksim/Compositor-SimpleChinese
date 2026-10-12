@@ -97,7 +97,6 @@ Compositor is English only for now, and translation pull requests aren't being a
 | ---------------------------- | -------------------------------- |
 | `导出 PNG…` / `导出 JPEG…`   | 格式名                           |
 | `Camera Raw`                 | Adobe 专有功能名，与 PS 保持一致 |
-| `移到"Mr.Cody's iPad Pro 5"` | 设备名，系统生成                 |
 | `Compositor 中文版帮助`      | 产品名                           |
 | `X` `Y` `W` `H`              | PS 中文版同样保留拉丁缩写        |
 | `sRGB` `DPI` `Gamma`         | 标准术语                         |
